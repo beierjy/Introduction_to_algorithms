@@ -37,7 +37,7 @@ void recur_0_1_knapsack(int* weight, int* price, int m_num, int w_sum){
 	free(sum_price);
 }
 
-//类似动态规划
+//迭代求解法
 void _0_1_knapsack_1(int* weight, int* price, int m_num, int w_sum){
 	if (weight == NULL || price == NULL || m_num <= 0 || w_sum <= 0)
 		return;
@@ -71,7 +71,7 @@ void _0_1_knapsack_1(int* weight, int* price, int m_num, int w_sum){
 				int temp_price = m_price[i][j - 1] + price[j];
 				if (temp_price > m_price[i][j - 1]){
 					m_price[i][j] = temp_price;
-					w_l[i][j] = m_price[i][j - 1] - weight[j];
+					w_l[i][j] = w_l[i][j - 1] - weight[j];
 				}
 				if (max < m_price[i][j]){
 					max = m_price[i][j];
@@ -81,13 +81,16 @@ void _0_1_knapsack_1(int* weight, int* price, int m_num, int w_sum){
 		}
 	}
 	for (int i = tag; i < m_num; i++){
-		printf("%d\t", i+1);
+		for (int j = i; j < m_num; j++){
+			if (j > 0 && m_price[i][j] != m_price[i][j - 1])
+				printf("%d\t", j + 1);
+		}
 	}
 	printf("\n%d", max);
 	printf("\n");
 	for (int i = 0; i < m_num; i++){
 		for (int j = 0; j < m_num; j++){
-			printf("%d\t", m_price[i][j]);
+				printf("%d\t", m_price[i][j]);
 		}
 		printf("\n");
 	}
@@ -117,24 +120,19 @@ int max_fun(int m, int n){
 void _0_1_knapsack(int* weight, int* price, int m_num, int w_sum){
 	if (weight == NULL || price == NULL || m_num <= 0 || w_sum <= 0)
 		return;
-
 	int** m_price = (int**)malloc(sizeof(int*)*m_num);
 	for (int i = 0; i < m_num; i++){
 		m_price[i] = (int*)malloc(sizeof(int)*(w_sum+1));
 	}
-	int min = 0;
-	if ((weight[m_num] - 1) < w_sum)
-		min = weight[m_num] - 1;
-	else
-		min = w_sum;
-	for (int j = 0; j < min; j++){
+	
+	for (int j = 0; j < min_fun(weight[m_num]-1,w_sum); j++){
 		m_price[m_num - 1][j] = 0;
 	}
-	for (int j = weight[m_num] - 1; j < w_sum; j++){
+	for (int j = weight[m_num-1] - 1; j < w_sum; j++){
 		m_price[m_num - 1][j] = price[m_num-1];
 	}
-	for (int i = m_num - 1; i >= 1; i--){
-		for (int j = 0; j < min_fun(weight[i] - 1, w_sum); j++)
+	for (int i = m_num - 1; i > 1; i--){
+		for (int j = 0; j < min_fun(weight[i]-1, w_sum); j++)
 		{
 			m_price[i][j] = m_price[i + 1][j];
 		}
