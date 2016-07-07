@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+//递归求解
 int _0_1_knapsack_up(int* weight, int* price, int m_num, int w_sum,int k,int l, int* sum_price){
 	if (weight == NULL || price == NULL || m_num <= 0 || w_sum <= 0|| sum_price == NULL ||k < 0 || l < 0 ||k > l)
 		return 0;
@@ -35,7 +35,7 @@ void recur_0_1_knapsack(int* weight, int* price, int m_num, int w_sum){
 	free(sum_price);
 }
 
-//如果迭代求解的话，必须用递归进行求子结构的最小值，否则是错误的
+//上述遍历，必须用递归进行求子结构的最小值，否则是错误的
 //动态规划
 int min_fun(int m, int n){
 	if (m > n)
@@ -73,7 +73,7 @@ int _0_1_knapsack(int* weight, int* price, int m_num, int w_sum){
 			m_price[i][j] = m_price[i + 1][j];
 		}
 		for (int j = weight[i]; j <= w_sum; j++){
-			m_price[i][j] = max_fun(m_price[i + 1][j], m_price[i + 1][j - weight[i]] + price[i]);
+			m_price[i][j] = max_fun(m_price[i + 1][j], m_price[i + 1][j - weight[i]] + price[i]);//这里便是从减去新加入的质量的下层往上计算
 		}
 	}
 	if (w_sum < weight[0]){
