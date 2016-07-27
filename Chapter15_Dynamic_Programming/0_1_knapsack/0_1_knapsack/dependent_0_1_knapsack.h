@@ -53,7 +53,6 @@ void Dependent_0_1_knapsack(){
                             (price[i][0]*weight[i][0]));
 			   if(t>m_price[i][j])
 				   m_price[i][j] = t;
-                
             }
             if((price[i][0]+price[i][1])/10<=j){
                 m_price[i][j] = max(m_price[i][j],m_price[i-1][j-(price[i][0]+price[i][1])/10]
