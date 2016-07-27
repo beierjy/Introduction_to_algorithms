@@ -40,7 +40,7 @@ v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号�
 2200
 */
 
-
+//此种算法步骤只适合固定最大附件数量的情况
 #include <iostream>
 #include <vector>
 
